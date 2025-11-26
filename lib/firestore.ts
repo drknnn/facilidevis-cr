@@ -185,7 +185,7 @@ export async function deleteClient(
 
 export async function getQuotes(
   userId: string,
-  status?: QuoteStatus
+  status?: QuoteStatus | 'all'
 ): Promise<Quote[]> {
   try {
     const quotesRef = collection(db, 'quotes')
@@ -196,7 +196,7 @@ export async function getQuotes(
     )
     
     if (status && status !== 'all') {
-      q = query(q, where('status', '==', status))
+      q = query(q, where('status', '==', status as QuoteStatus))
     }
     
     const snapshot = await getDocs(q)
@@ -271,7 +271,7 @@ export async function getQuoteById(
       ...quoteData,
       items,
       reminders,
-    } as Quote
+    } as unknown as Quote
   } catch (error) {
     console.error('[FIRESTORE] Get quote error:', error)
     throw error

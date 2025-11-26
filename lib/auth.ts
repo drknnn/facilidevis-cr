@@ -31,6 +31,9 @@ export async function verifyPassword(password: string, hashedPassword: string): 
 
 export function generateToken(userId: string): string {
   try {
+    if (!JWT_SECRET) {
+      throw new Error('JWT_SECRET is not defined')
+    }
     return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '30d' })
   } catch (error) {
     console.error('Error generating token:', error)
@@ -40,7 +43,13 @@ export function generateToken(userId: string): string {
 
 export function verifyToken(token: string): { userId: string } | null {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string }
+    if (!JWT_SECRET) {
+      throw new Error('JWT_SECRET is not defined')
+    }
+    const decoded = jwt.verify(token, JWT_SECRET) as unknown as { userId: string }
+    if (!decoded || typeof decoded !== 'object' || !('userId' in decoded)) {
+      return null
+    }
     return decoded
   } catch (error: any) {
     // Log détaillé pour debug

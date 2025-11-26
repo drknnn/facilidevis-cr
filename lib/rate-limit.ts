@@ -52,11 +52,13 @@ export function checkRateLimit(
  */
 export function cleanupRateLimitStore(): void {
   const now = Date.now()
-  for (const [key, record] of store.entries()) {
+  const keysToDelete: string[] = []
+  store.forEach((record, key) => {
     if (now > record.resetTime) {
-      store.delete(key)
+      keysToDelete.push(key)
     }
-  }
+  })
+  keysToDelete.forEach(key => store.delete(key))
 }
 
 // Nettoyer toutes les 5 minutes

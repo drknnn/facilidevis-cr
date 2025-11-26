@@ -53,10 +53,11 @@ async function handler(req: NextRequest, userId: string) {
       customerId = subscription.stripeCustomerId
     } else {
       // Créer un nouveau customer Stripe
-      const customer = await createStripeCustomer(userId, user.email, {
-        companyName: user.companyName || undefined,
-        phone: user.phone || undefined,
-      })
+      const metadata: Record<string, string> = {}
+      if (user.companyName) metadata.companyName = user.companyName
+      if (user.phone) metadata.phone = user.phone
+      
+      const customer = await createStripeCustomer(userId, user.email, metadata)
       customerId = customer.id
 
       // Sauvegarder dans Firestore

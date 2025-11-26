@@ -84,11 +84,10 @@ async function postHandler(req: NextRequest, userId: string) {
             ? quote.createdAt 
             : (quote.createdAt as any).toDate(),
           client: {
-            id: client.id,
             name: client.name,
-            phone: client.phone || null,
-            email: client.email || null,
-            address: client.address || null,
+            phone: client.phone ?? null,
+            email: client.email ?? null,
+            address: client.address ?? null,
           },
           items: quote.items.map((item) => ({
             id: item.id || '',

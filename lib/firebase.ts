@@ -35,30 +35,40 @@ const missingVars = requiredEnvVars.filter(
 )
 
 if (missingVars.length > 0) {
-  console.error('❌ ERREUR CRITIQUE: Variables Firebase manquantes:')
+  console.warn('⚠️ Variables Firebase manquantes:')
   missingVars.forEach((varName) => {
-    console.error(`   - ${varName}`)
+    console.warn(`   - ${varName}`)
   })
-  console.error('   Ajoutez ces variables dans votre fichier .env.local')
-  console.error('   Voir .env.local.example pour un exemple')
+  console.warn('   Ajoutez ces variables dans votre fichier .env.local')
+  console.warn('   Voir .env.local.example pour un exemple')
   
   if (process.env.NODE_ENV === 'production') {
     throw new Error(`Firebase configuration missing: ${missingVars.join(', ')}`)
   }
+  
+  // En développement, continuer sans Firebase (pour permettre le build)
+  console.warn('   ⚠️ Continuation du build sans Firebase (développement uniquement)')
 }
 
 // Initialiser Firebase App (éviter double initialisation)
-let app: FirebaseApp
-if (getApps().length === 0) {
-  app = initializeApp(firebaseConfig)
+let app: FirebaseApp | null = null
+if (missingVars.length === 0) {
+  if (getApps().length === 0) {
+    app = initializeApp(firebaseConfig)
+  } else {
+    app = getApps()[0]
+  }
 } else {
-  app = getApps()[0]
+  // En développement, créer une app vide si les variables manquent
+  if (process.env.NODE_ENV === 'development') {
+    console.warn('⚠️ Firebase non initialisé: variables manquantes')
+  }
 }
 
-// Exporter les instances Firebase
-export const auth: Auth = getAuth(app)
-export const db: Firestore = getFirestore(app)
-export const storage: FirebaseStorage = getStorage(app)
+// Exporter les instances Firebase (peuvent être null en dev si non configuré)
+export const auth: Auth | null = app ? getAuth(app) : null as any
+export const db: Firestore | null = app ? getFirestore(app) : null as any
+export const storage: FirebaseStorage | null = app ? getStorage(app) : null as any
 export { app }
 
 // Helper pour vérifier si Firebase est configuré

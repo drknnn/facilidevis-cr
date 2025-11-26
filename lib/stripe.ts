@@ -21,8 +21,8 @@ if (!STRIPE_SECRET_KEY && process.env.NODE_ENV === 'production') {
 
 // Initialiser Stripe (uniquement si la clé est définie)
 export const stripe: Stripe | null = STRIPE_SECRET_KEY 
-  ? new Stripe(STRIPE_SECRET_KEY, {
-      apiVersion: '2024-12-18.acacia',
+  ? new Stripe(STRIPE_SECRET_KEY!, {
+      apiVersion: '2025-11-17.clover',
       typescript: true,
     })
   : null
