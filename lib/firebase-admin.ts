@@ -43,6 +43,9 @@ if (!admin.apps.length) {
 
 export { admin }
 
+// Exporter adminDb pour utilisation dans les routes API
+export const adminDb = admin.firestore()
+
 /**
  * Vérifier un token Firebase ID côté serveur
  */
