@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import MobileLayout from '@/components/layout/MobileLayout'
-import Button from '@/components/ui/Button'
+import { Button } from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Textarea from '@/components/ui/Textarea'
-import Card from '@/components/ui/Card'
+import { Card } from '@/components/ui/Card'
 import { FiPlus, FiTrash2, FiCheck, FiUser, FiFileText } from 'react-icons/fi'
 
 interface Client {

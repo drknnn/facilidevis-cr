@@ -142,7 +142,7 @@ export async function createClient(
 export async function updateClient(
   clientId: string,
   userId: string,
-  data: Partial<Omit<Client, 'id' | 'userId' | 'createdAt'>>>
+  data: Partial<Omit<Client, 'id' | 'userId' | 'createdAt'>>
 ): Promise<void> {
   try {
     // Vérifier que le client appartient à l'utilisateur

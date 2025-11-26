@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import MobileLayout from '@/components/layout/MobileLayout'
-import Card from '@/components/ui/Card'
-import Button from '@/components/ui/Button'
+import { Card } from '@/components/ui/Card'
+import { Button } from '@/components/ui/Button'
 import { FiPlus, FiUser, FiPhone, FiMail, FiMapPin } from 'react-icons/fi'
 
 interface Client {

@@ -3,10 +3,10 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import MobileLayout from '@/components/layout/MobileLayout'
-import Button from '@/components/ui/Button'
+import { Button } from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Textarea from '@/components/ui/Textarea'
-import Card from '@/components/ui/Card'
+import { Card } from '@/components/ui/Card'
 import { FiPhone, FiMail, FiMapPin, FiUser } from 'react-icons/fi'
 
 export default function NewClientPage() {

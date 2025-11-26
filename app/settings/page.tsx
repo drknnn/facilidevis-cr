@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import MobileLayout from '@/components/layout/MobileLayout'
-import Button from '@/components/ui/Button'
-import Card from '@/components/ui/Card'
+import { Button } from '@/components/ui/Button'
+import { Card } from '@/components/ui/Card'
 import { FiLogOut, FiMail, FiPhone, FiBriefcase } from 'react-icons/fi'
 
 interface User {

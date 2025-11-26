@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import Button from '@/components/ui/Button'
+import { Button } from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Logo from '@/components/ui/Logo'
 import { FiMail, FiLock } from 'react-icons/fi'

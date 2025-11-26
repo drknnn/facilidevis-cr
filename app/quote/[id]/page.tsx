@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
-import Card from '@/components/ui/Card'
-import Button from '@/components/ui/Button'
+import { Card } from '@/components/ui/Card'
+import { Button } from '@/components/ui/Button'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale/fr'
 
