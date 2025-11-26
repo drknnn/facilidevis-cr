@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  html,
+  body {
+    @apply max-w-full overflow-x-hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-gray-50 text-gray-900;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 
+                 'Inter', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  /* Mobile-first optimizations - CONTRASTE ÉLEVÉ pour chantier */
+  input,
+  textarea,
+  select {
+    @apply text-base; /* Prevents zoom on iOS */
+    @apply font-medium; /* Meilleure lisibilité */
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Focus visible pour accessibilité */
+  *:focus-visible {
+    @apply outline-2 outline-primary-500 outline-offset-2;
+  }
+}
+
+@layer components {
+  /* Boutons fat-finger optimisés */
+  .btn-base {
+    @apply inline-flex items-center justify-center gap-2;
+    @apply font-semibold;
+    @apply rounded-lg;
+    @apply transition-all duration-200;
+    @apply focus-visible:outline-2 focus-visible:outline-primary-500 focus-visible:outline-offset-2;
+    @apply disabled:opacity-50 disabled:pointer-events-none;
+    @apply min-h-[44px] min-w-[44px]; /* Tap target minimum */
+    @apply select-none;
+  }
+
+  /* Inputs haute lisibilité */
+  .input-base {
+    @apply w-full;
+    @apply px-4 py-3;
+    @apply text-base font-medium;
+    @apply bg-white;
+    @apply border-2 border-gray-200;
+    @apply rounded-lg;
+    @apply transition-all duration-200;
+    @apply placeholder:text-gray-400;
+    @apply focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20;
+    @apply disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed;
+    @apply min-h-[44px]; /* Tap target */
+  }
+
+  /* Cards premium */
+  .card-base {
+    @apply bg-white;
+    @apply border border-gray-200;
+    @apply rounded-xl;
+    @apply shadow-sm;
+    @apply transition-all duration-200;
+  }
+}
+
+@layer utilities {
+  /* Custom scrollbar premium */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-gray-100 rounded-full;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full;
+    @apply hover:bg-gray-400;
+  }
+
+  /* Tap target optimization */
+  .tap-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Text contrast élevé */
+  .text-high-contrast {
+    @apply text-gray-900 font-semibold;
+  }
+
+  /* Shadows premium */
+  .shadow-premium {
+    box-shadow: 0 2px 8px rgba(1, 101, 255, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+
+  .shadow-premium-lg {
+    box-shadow: 0 10px 25px rgba(1, 101, 255, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+}

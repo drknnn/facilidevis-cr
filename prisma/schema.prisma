@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  password    String
+  role        String   @default("artisan")
+  companyName String?
+  phone       String?
+  createdAt   DateTime @default(now())
+
+  clients  Client[]
+  quotes   Quote[]
+  reminders Reminder[]
+
+  @@map("users")
+}
+
+model Client {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  phone     String?
+  email     String?
+  address   String?
+  createdAt DateTime @default(now())
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quotes Quote[]
+
+  @@map("clients")
+}
+
+model Quote {
+  id          String   @id @default(cuid())
+  userId      String
+  clientId    String
+  title       String
+  description String?
+  amountHt    Float    @default(0)
+  amountTtc   Float    @default(0)
+  status      String   @default("draft") // draft | sent | viewed | reminded | accepted | refused
+  pdfUrl      String?
+  sentAt      DateTime?
+  lastSentAt  DateTime?
+  viewedAt    DateTime?
+  acceptedAt  DateTime?
+  createdAt   DateTime @default(now())
+
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  client    Client       @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  items     QuoteItem[]
+  reminders Reminder[]
+  signature Signature?
+
+  @@map("quotes")
+}
+
+model QuoteItem {
+  id        String @id @default(cuid())
+  quoteId   String
+  label     String
+  qty       Float  @default(1)
+  unitPrice Float  @default(0)
+  total     Float  @default(0)
+
+  quote Quote @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+
+  @@map("quote_items")
+}
+
+model Reminder {
+  id           String   @id @default(cuid())
+  quoteId     String
+  userId      String
+  reminderDate DateTime
+  reminderType String   // SMS | email
+  status      String   @default("pending") // pending | done
+
+  quote Quote @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("reminders")
+}
+
+model Signature {
+  id              String   @id @default(cuid())
+  quoteId         String   @unique
+  signatureImageUrl String
+  signedAt        DateTime @default(now())
+  ipAddress       String?
+
+  quote Quote @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+
+  @@map("signatures")
+}
+
