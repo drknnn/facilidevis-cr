@@ -65,10 +65,11 @@ if (missingVars.length === 0) {
   }
 }
 
-// Exporter les instances Firebase (peuvent être null en dev si non configuré)
-export const auth: Auth | null = app ? getAuth(app) : null as any
-export const db: Firestore | null = app ? getFirestore(app) : null as any
-export const storage: FirebaseStorage | null = app ? getStorage(app) : null as any
+// Exporter les instances Firebase
+// En production, ces valeurs ne seront jamais null si Firebase est configuré
+export const auth: Auth = app ? getAuth(app) : (null as any)
+export const db: Firestore = app ? getFirestore(app) : (null as any)
+export const storage: FirebaseStorage = app ? getStorage(app) : (null as any)
 export { app }
 
 // Helper pour vérifier si Firebase est configuré
